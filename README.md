@@ -1,2 +1,3 @@
-# P04_Mykolyangelo
-Jackson do be kinda rude 
+# Mykolyangelo
+
+Grace Mao (PM), Tammy Chen, Jun Tao Lei, and Jackson Zou
