@@ -2,7 +2,7 @@
 
 Grace Mao (PM), Tammy Chen, Jun Tao Lei, and Jackson Zou
 
-# Summary
+## Summary
 
 This project is a proper visualization of CO2, methane, and other 
 greenhouse gas emissions in different countries from 1960 to 2018. Taken 
