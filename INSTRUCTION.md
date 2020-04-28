@@ -14,13 +14,13 @@ pip install -r requirements.txt
 
 *nix
 ```bash
-export FLASK_APP=flaskr
+export FLASK_APP=app
 FLASK_ENV=development flask run
 ```
 
 Windows
 ```windows
-set FLASK_APP=flaskr
+set FLASK_APP=app
 set FLASK_ENV=development
 flask run
 ```
