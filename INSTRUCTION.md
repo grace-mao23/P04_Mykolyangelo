@@ -39,7 +39,7 @@ set FLASK_APP=app
 flask init-db {Replace with the name of the CSV file}
 ```
 
-5. Run the app with Flask CLI in development mode
+## 6. Run the app with Flask CLI in development mode
 
 Linux and Macs
 ---
