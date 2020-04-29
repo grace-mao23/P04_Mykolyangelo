@@ -36,7 +36,7 @@ set FLASK_APP=app
 ## 5. Migrate CSV to a SQLite database (Note that this may take a while)
 
 ```bash
-flask init-db {Replace with the name of the CSV file}
+flask init-db {Replace with the name of the CSV file. Example: prelim.csv}
 ```
 
 ## 6. Run the app with Flask CLI in development mode
