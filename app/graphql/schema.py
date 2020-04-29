@@ -1,8 +1,7 @@
 import graphene
-from graphene_sqlalchemy import (SQLAlchemyObjectType,
-                                 SQLAlchemyConnectionField)
+from graphene_sqlalchemy import (SQLAlchemyObjectType)
 
-from app.graphql.models import (Country)
+from app.graphql.models import (Country, CO2Emission)
 
 
 class Country(SQLAlchemyObjectType):

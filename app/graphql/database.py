@@ -1,38 +1,74 @@
-from csv import (DictReader)
+from csv import (reader)
+from sys import (maxsize, stdout)
 
 from app import (db)
 from app.graphql.models import (Country, CO2Emission, MethaneEmission,
                                 GreenhouseGasEmission)
 
 
+class Processor():
+    def __init__(self, filestream):
+        csv_reader = reader(filestream)
+        self.__headers = next(csv_reader, None)
+        self.__inner = list(csv_reader)
+        self.__index = len(self.__inner)
+        self.__initial_year = maxsize
+        self.__final_year = -maxsize - 1
+        for header in self.__headers:
+            try:
+                if int(float(header)) < self.__initial_year:
+                    self.__initial_year = int(float(header))
+                if int(float(header)) > self.__final_year:
+                    self.__final_year = int(float(header))
+            except:
+                pass
+
+    def headers(self):
+        return self.__headers
+
+    def initial_year(self):
+        return self.__initial_year
+
+    def final_year(self):
+        return self.__final_year
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.__index == 0:
+            raise StopIteration
+        self.__index -= 1
+        return self.__inner[self.__index]
+
+
 def migrate(filepath):
-    field_names = 'Series Name,Series Code,Country Name,Country Code,1960 ,1961 ,1962 ,1963 ,1964 ,1965 ,1966 ,1967 ,1968 ,1969 ,1970 ,1971 ,1972 ,1973 ,1974 ,1975 ,1976 ,1977 ,1978 ,1979 ,1980 ,1981 ,1982 ,1983 ,1984 ,1985 ,1986 ,1987 ,1988 ,1989 ,1990 ,1991 ,1992 ,1993 ,1994 ,1995 ,1996 ,1997 ,1998 ,1999 ,2000 ,2001 ,2002 ,2003 ,2004 ,2005 ,2006 ,2007 ,2008 ,2009 ,2010 ,2011 ,2012 ,2013 ,2014 ,2015 ,2016 ,2017 ,2018 ,2019 '.split(
-        ',')
-
-    for (index, name) in enumerate(field_names):
-        field_names[index] = name.strip()
-
-    field_names = tuple(field_names)
-
-    start_year = 1960
-    end_year = 2019
-
     db.drop_all()
     db.create_all()
 
+    csv_file = {}
+
     with open(filepath) as f:
-        reader = DictReader(f, field_names)
-        next(reader, None)
-        for row in reader:
-            row = dict(row)
-            country = Country(country_code=row['Country Code'],
-                              country_name=row['Country Name'])
-            db.session.add(country)
-            db.session.commit()
-            for year in range(start_year, end_year):
-                if row[str(year)] != '..' and row[str(year)] != '':
-                    db.session.add(
-                        CO2Emission(country=country,
-                                    time=str(year),
-                                    amount=row[str(year)]))
-                    db.session.commit()
+        csv_file = Processor(f)
+
+    for row in csv_file:
+        row = dict(zip(csv_file.headers(), row))
+
+        country = Country(country_code=row['Country Code'],
+                          country_name=row['Country Name'])
+
+        db.session.add(country)
+
+        for year in range(csv_file.initial_year(), csv_file.final_year()):
+            try:
+                num_year = float(row[str(year)])
+                for model in [CO2Emission, MethaneEmission,
+                              GreenhouseGasEmission]:
+                    model_object = model(country=country,
+                                         time=str(year),
+                                         amount=row[str(year)])
+                    db.session.add(model_object)
+            except:
+                pass
+
+        db.session.commit()

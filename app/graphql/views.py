@@ -1,5 +1,5 @@
 from flask import (Blueprint, request, jsonify)
-from flask_graphql import GraphQLView
+from flask_graphql import (GraphQLView)
 
 from app.graphql.schema import (schema)
 

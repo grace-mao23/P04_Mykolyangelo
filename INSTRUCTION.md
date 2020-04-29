@@ -22,16 +22,18 @@ pip install -r requirements.txt
 ## 4. Set Flask app location
 
 Linux and Macs
+
 ```bash
 export FLASK_APP=app
 ```
 
 Windows
+
 ```bash
 set FLASK_APP=app
 ```
 
-## 5. Migrate CSV to a SQLite database
+## 5. Migrate CSV to a SQLite database (Note that this may take a while)
 
 ```bash
 flask init-db {Replace with the name of the CSV file}
@@ -40,11 +42,13 @@ flask init-db {Replace with the name of the CSV file}
 ## 6. Run the app with Flask CLI in development mode
 
 Linux and Macs
+
 ```bash
 FLASK_ENV=development flask run
 ```
 
 Windows
+
 ```windows
 set FLASK_ENV=development
 flask run
