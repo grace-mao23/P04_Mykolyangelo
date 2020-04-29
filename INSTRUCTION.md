@@ -53,3 +53,19 @@ Windows
 set FLASK_ENV=development
 flask run
 ```
+
+## GraphiQL
+
+Test out the queries at http://localhost:5000/graphql/
+
+Example:
+```graphql
+{
+  allCo2emissionByTime(time:"2000") {
+    country {
+      countryName
+    }
+    amount
+  }
+}
+```
