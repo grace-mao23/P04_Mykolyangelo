@@ -1,36 +1,51 @@
-from flask import Flask, jsonify, request
-from ariadne.constants import PLAYGROUND_HTML
+import os
+import click
 
-app = Flask(__name__)
+from csv import (DictReader)
+from flask import (Flask, render_template)
+from flask.cli import (with_appcontext)
+from flask_sqlalchemy import (SQLAlchemy)
 
-
-@app.route('/')
-def index():
-    return "Hello, world!"
-
-
-@app.route('/graphql', method=['GET'])
-def graphql_playground():
-    # On GET request serve GraphQL Playground
-    # You don't need to provide Playground if you don't want to
-    # but keep on mind this will not prohibit clients from
-    # exploring your API using desktop GraphQL Playground app.
-    return PLAYGROUND_HTML, 200
+db = SQLAlchemy()
 
 
-@app.route('/graphql', method=['POST'])
-def graphql_server():
-    # GraphQL queries are always sent as POST
-    data = request.get_json()
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
 
-    # Note: Passing the request to the context is optional.
-    # In Flask, the current request is always accessible as flask.request
-    success, result = graphql_sync(
-        schema,
-        data,
-        context_value=request,
-        debug=app.debug
+    os.makedirs(app.instance_path, exist_ok=True)
+
+    db_uri = f'sqlite:///{os.path.join(app.instance_path, "climate.sqlite")}'
+
+    app.config.from_mapping(
+        SECRET_KEY=os.environ.get("SECRET_KEY", "dev"),
+        SQLALCHEMY_DATABASE_URI=db_uri,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
-    status_code = 200 if success else 400
-    return jsonify(result), status_code
+    db.init_app(app)
+    app.cli.add_command(init_db_command)
+
+    from app import graphql
+
+    app.register_blueprint(graphql.bp)
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+
+    return app
+
+
+def init_db(filename):
+    click.echo("Beginning the migration process. This can take a while.")
+    from app.graphql.database import migrate
+    migrate(os.path.join(os.path.dirname(__file__), f'static/{filename}'))
+
+
+@click.command("init-db")
+@click.argument("filename")
+@with_appcontext
+def init_db_command(filename):
+    """Clear existing data and create new tables."""
+    init_db(filename)
+    click.echo("Initialized the database.")
