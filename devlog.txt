@@ -10,7 +10,7 @@ juntaoL-- 2020-04-28 15:02
 - added basic graphql support
 - added instructions
 
-graceM -- 2020-04029 14:00
+graceM -- 2020-04-29 14:00
 - updated design doc
 - reviewed by JEeBerS and ihatequarantine
 - ihatequarantine noted to specify PM, alphabetize names, add a 
@@ -25,3 +25,7 @@ retrieved from, and highlight the statistics for each country
 - timeline adjusted for due date with focus that up until 5/4 would be 
 focused on backend database management, and D3 work would start after 
 data is easily retrieved in order to avoid messes
+
+juntaoL -- 2020-4-29 15:30
+- fixed database row duplication error
+- added more GraphQL queries

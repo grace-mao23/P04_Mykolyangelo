@@ -6,6 +6,13 @@ from app.graphql.models import (Country, CO2Emission, MethaneEmission,
                                 GreenhouseGasEmission)
 
 
+switcher = {
+    "CO2 emissions (kt)": CO2Emission,
+    "Methane emissions (kt of CO2 equivalent)": MethaneEmission,
+    "Total greenhouse gas emissions (kt of CO2 equivalent)": GreenhouseGasEmission
+}
+
+
 class Processor():
     def __init__(self, filestream):
         csv_reader = reader(filestream)
@@ -48,7 +55,7 @@ def migrate(filepath):
 
     csv_file = {}
 
-    with open(filepath) as f:
+    with open(filepath, mode='r', encoding='utf-8-sig') as f:
         csv_file = Processor(f)
 
     for row in csv_file:
@@ -62,12 +69,10 @@ def migrate(filepath):
         for year in range(csv_file.initial_year(), csv_file.final_year()):
             try:
                 num_year = float(row[str(year)])
-                for model in [CO2Emission, MethaneEmission,
-                              GreenhouseGasEmission]:
-                    model_object = model(country=country,
-                                         time=str(year),
-                                         amount=row[str(year)])
-                    db.session.add(model_object)
+                model_object = switcher[row['Series Name']](country=country,
+                                                            time=str(year),
+                                                            amount=row[str(year)])
+                db.session.add(model_object)
             except:
                 pass
 
