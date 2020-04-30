@@ -30,3 +30,18 @@ data loaded and joined into D3
 
 
 ## Launch Instructions
+1. Clone the project
+```
+$ git clone git@github.com:grace-mao23/P04_Mykolyangelo.git
+```
+
+
+2. Install all the necessary packages
+```
+$ pip install -r requirements.txt
+```
+
+3. Run the app
+```
+$ python3 __init__.py
+```
