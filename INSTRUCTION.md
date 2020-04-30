@@ -36,7 +36,7 @@ set FLASK_APP=app
 ## 5. Migrate CSV to a SQLite database (Note that this may take a while)
 
 ```bash
-flask init-db {Replace with the name of the CSV file}
+flask init-db {Replace with the name of the CSV file. Example: prelim.csv}
 ```
 
 ## 6. Run the app with Flask CLI in development mode
@@ -52,4 +52,20 @@ Windows
 ```windows
 set FLASK_ENV=development
 flask run
+```
+
+## GraphiQL
+
+Test out the queries at http://localhost:5000/graphql/
+
+Example:
+```graphql
+{
+  allCo2emissionByTime(time:"2000") {
+    country {
+      countryName
+    }
+    amount
+  }
+}
 ```
