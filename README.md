@@ -15,7 +15,7 @@ graphs, rendered by Javascript's D3. Our data is stored in a SQLite
 database, and we are using Bootstrap as our frontend framework to
 enhance user experience.
 
-# Our Team
+## Our Team
 
 Frontend: Grace Mao (PM), Tammy Chen
 * HTML: Base webpage templates, Bootstrap framework and CSS
@@ -27,3 +27,6 @@ Backend: Jun Tao Lei, Jackson Zou
 SQLite database
 * Data Retrieval: Javascript fetch will be used to access information,
 data loaded and joined into D3
+
+
+## Launch Instructions
