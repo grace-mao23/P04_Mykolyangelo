@@ -29,3 +29,9 @@ data is easily retrieved in order to avoid messes
 juntaoL -- 2020-4-29 15:30
 - fixed database row duplication error
 - added more GraphQL queries
+
+graceM -- 2020-04-30 14:17
+- added launch codes to the readme
+- going through countries that don't cross reference in topojson and our 
+data
+
