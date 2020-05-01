@@ -18,26 +18,27 @@ enhance user experience.
 ## Our Team
 
 Frontend: Grace Mao (PM), Tammy Chen
+
 * HTML: Base webpage templates, Bootstrap framework and CSS
 * Javascript: D3 rendering of visualizations and animations
 
-
 Backend: Jun Tao Lei, Jackson Zou
+
 * Database Management: parse data from csv and categorize to store in
 SQLite database
 * Data Retrieval: Javascript fetch will be used to access information,
 data loaded and joined into D3
 
-
 ## Launch Instructions
+
 1. Clone the project
 
 ```bash
-$ git clone git@github.com:grace-mao23/P04_Mykolyangelo.git
+git clone git@github.com:grace-mao23/P04_Mykolyangelo.git
 ```
 
-2. Run the app (The makefile will setup your python virtual environment)
+2. Run the app in development mode
 
 ```bash
-$ make nix
+make nix
 ```
