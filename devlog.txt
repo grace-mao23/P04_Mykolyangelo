@@ -1,0 +1,37 @@
+graceM -- 2020-04-26 23:08
+- design doc version 1.0 uploaded
+- devlog created
+- README updated with summary and title
+
+juntaoL-- 2020-04-27 14:42
+- added basic project layout
+
+juntaoL-- 2020-04-28 15:02
+- added basic graphql support
+- added instructions
+
+graceM -- 2020-04-29 14:00
+- updated design doc
+- reviewed by JEeBerS and ihatequarantine
+- ihatequarantine noted to specify PM, alphabetize names, add a 
+timeline, and update README
+- JEeBerS noted to specify PM, explain where world globe data was 
+retrieved from, and highlight the statistics for each country
+- modifications:
+	- specified PM, reordered names
+	- added approximate dates of completion for development stages
+	- explained use of topojson and source code for the globe 
+	- display of statistics added to the development stages timeline
+- timeline adjusted for due date with focus that up until 5/4 would be 
+focused on backend database management, and D3 work would start after 
+data is easily retrieved in order to avoid messes
+
+juntaoL -- 2020-4-29 15:30
+- fixed database row duplication error
+- added more GraphQL queries
+
+graceM -- 2020-04-30 14:17
+- added launch codes to the readme
+- going through countries that don't cross reference in topojson and our 
+data
+
