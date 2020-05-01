@@ -25,9 +25,10 @@ def create_app(test_config=None):
     db.init_app(app)
     app.cli.add_command(init_db_command)
 
-    from app import graphql
+    from app import (graphql, country)
 
     app.register_blueprint(graphql.bp)
+    app.register_blueprint(country.bp)
 
     @app.route('/')
     def index():
