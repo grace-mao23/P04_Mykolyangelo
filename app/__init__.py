@@ -31,10 +31,6 @@ def create_app(test_config=None):
     app.register_blueprint(graphql.bp)
     app.register_blueprint(country.bp)
 
-    @app.route("/")
-    def index():
-        return render_template("index.html")
-
     return app
 
 
