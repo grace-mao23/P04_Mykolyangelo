@@ -1,19 +1,33 @@
-from csv import (reader)
-from sys import (maxsize, stdout)
+from csv import reader
+from sys import maxsize, stdout
 
-from app import (db)
-from app.graphql.models import (Country, CO2Emission, MethaneEmission,
-                                GreenhouseGasEmission)
+from app import db
+from app.graphql.models import (
+    Country,
+    CO2Emission,
+    CO2EmissionPerCapita,
+    MethaneEmission,
+    GreenhouseGasEmission,
+    PopulationGrowth,
+    Population,
+    AccessToElectricity,
+    ElectricConsumption,
+)
 
 
 switcher = {
     "CO2 emissions (kt)": CO2Emission,
+    "CO2 emissions (metric tons per capita)": CO2EmissionPerCapita,
     "Methane emissions (kt of CO2 equivalent)": MethaneEmission,
-    "Total greenhouse gas emissions (kt of CO2 equivalent)": GreenhouseGasEmission
+    "Total greenhouse gas emissions (kt of CO2 equivalent)": GreenhouseGasEmission,
+    "Population growth (annual %)": PopulationGrowth,
+    "Population, total": Population,
+    "Access to electricity (% of population)": AccessToElectricity,
+    "Electric power consumption (kWh per capita)": ElectricConsumption,
 }
 
 
-class Processor():
+class Processor:
     def __init__(self, filestream):
         csv_reader = reader(filestream)
         self.__headers = next(csv_reader, None)
@@ -49,29 +63,42 @@ class Processor():
         return self.__inner[self.__index]
 
 
-def migrate(filepath):
+def migrate(filepath, iso):
     db.drop_all()
     db.create_all()
 
     csv_file = {}
 
-    with open(filepath, mode='r', encoding='utf-8-sig') as f:
+    with open(filepath, mode="r", encoding="utf-8-sig") as f:
         csv_file = Processor(f)
 
     for row in csv_file:
         row = dict(zip(csv_file.headers(), row))
 
-        country = Country(country_code=row['Country Code'],
-                          country_name=row['Country Name'])
+        current_code = ""
 
-        db.session.add(country)
+        # TODO: Please optimize this
+        for code in iso:
+            if code["alpha-3"] == row["Country Code"]:
+                current_code = code["country-code"]
+                country = Country(
+                    country_code=code["country-code"], country_name=row["Country Name"],
+                )
+                db.session.add(country)
+                break
+
+        # TODO: Please optimize this
+        country = Country.query.filter_by(country_code=current_code).first()
 
         for year in range(csv_file.initial_year(), csv_file.final_year()):
             try:
-                num_year = float(row[str(year)])
-                model_object = switcher[row['Series Name']](country=country,
-                                                            time=str(year),
-                                                            amount=row[str(year)])
+                assert float(row[str(year)])
+                model_object = switcher[row["Series Name"]](
+                    country_id=country.id,
+                    country=country,
+                    year=year,
+                    amount=float(row[str(year)]),
+                )
                 db.session.add(model_object)
             except:
                 pass

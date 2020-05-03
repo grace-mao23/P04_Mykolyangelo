@@ -1,10 +1,11 @@
 import os
 import click
+import json
 
-from csv import (DictReader)
-from flask import (Flask, render_template)
-from flask.cli import (with_appcontext)
-from flask_sqlalchemy import (SQLAlchemy)
+from csv import DictReader
+from flask import Flask, render_template
+from flask.cli import with_appcontext
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
@@ -25,14 +26,14 @@ def create_app(test_config=None):
     db.init_app(app)
     app.cli.add_command(init_db_command)
 
-    from app import (graphql, country)
+    from app import graphql, country
 
     app.register_blueprint(graphql.bp)
     app.register_blueprint(country.bp)
 
-    @app.route('/')
+    @app.route("/")
     def index():
-        return render_template('index.html')
+        return render_template("index.html")
 
     return app
 
@@ -40,7 +41,15 @@ def create_app(test_config=None):
 def init_db(filename):
     click.echo("Beginning the migration process. This can take a while.")
     from app.graphql.database import migrate
-    migrate(os.path.join(os.path.dirname(__file__), f'static/{filename}'))
+
+    iso = {}
+
+    with open(
+        os.path.join(os.path.dirname(__file__), "static/iso-codes.json"), mode="r"
+    ) as f:
+        iso = json.load(f)
+
+    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso)
 
 
 @click.command("init-db")
