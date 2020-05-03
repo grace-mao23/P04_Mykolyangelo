@@ -1,44 +1,60 @@
-from app import (db)
+from sqlalchemy.ext.declarative import declared_attr
+
+from app import db
 
 
 class Country(db.Model):
-    __tablename__ = 'country'
+    __tablename__ = "country"
     id = db.Column(db.Integer, primary_key=True)
-    country_code = db.Column(db.String)
+    country_code = db.Column(db.Integer)
     country_name = db.Column(db.String)
 
 
-class CO2Emission(db.Model):
-    __tablename__ = 'co2emission'
+class CountryOutput(object):
     id = db.Column(db.Integer, primary_key=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    country = db.relationship(Country,
-                              backref=db.backref('co2emissions',
-                                                 uselist=True,
-                                                 cascade='delete,all'))
-    time = db.Column(db.String)
+
+    @declared_attr
+    def country_id(cls):
+        return db.Column(db.ForeignKey(Country.id), nullable=False)
+
+    @declared_attr
+    def country(cls):
+        return db.relationship(
+            Country,
+            backref=db.backref(cls.__tablename__, uselist=True, cascade="delete,all"),
+        )
+
+    year = db.Column(db.Integer)
     amount = db.Column(db.Float)
 
 
-class MethaneEmission(db.Model):
-    __tablename__ = 'methaneemission'
-    id = db.Column(db.Integer, primary_key=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    country = db.relationship(Country,
-                              backref=db.backref('methaneemissions',
-                                                 uselist=True,
-                                                 cascade='delete,all'))
-    time = db.Column(db.String)
-    amount = db.Column(db.Float)
+class CO2Emission(CountryOutput, db.Model):
+    __tablename__ = "co2_emission"
 
 
-class GreenhouseGasEmission(db.Model):
-    __tablename__ = 'greenhousegasemission'
-    id = db.Column(db.Integer, primary_key=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    country = db.relationship(Country,
-                              backref=db.backref('greenhousegasemissions',
-                                                 uselist=True,
-                                                 cascade='delete,all'))
-    time = db.Column(db.String)
-    amount = db.Column(db.Float)
+class CO2EmissionPerCapita(CountryOutput, db.Model):
+    __tablename__ = "co2_emission_per_capita"
+
+
+class MethaneEmission(CountryOutput, db.Model):
+    __tablename__ = "methane_emission"
+
+
+class GreenhouseGasEmission(CountryOutput, db.Model):
+    __tablename__ = "greenhouse_gas_emission"
+
+
+class PopulationGrowth(CountryOutput, db.Model):
+    __tablename__ = "population_growth"
+
+
+class Population(CountryOutput, db.Model):
+    __tablename__ = "population"
+
+
+class AccessToElectricity(CountryOutput, db.Model):
+    __tablename__ = "access_to_electricity"
+
+
+class ElectricConsumption(CountryOutput, db.Model):
+    __tablename__ = "electric_consumption"

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+{# Below is just for testing #}
+{% for country in data %}
+<li><a href="/country/{{ country.countryCode }}">{{ country.countryName }}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+  const data = {{ data | safe }};
+</script>
+{% endblock %}
