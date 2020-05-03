@@ -37,7 +37,7 @@ def create_app(test_config=None):
 def init_db(filename):
     click.echo("Beginning the migration process. This can take a while.")
     from app.graphql.database import migrate
-
+    
     iso = {}
 
     with open(

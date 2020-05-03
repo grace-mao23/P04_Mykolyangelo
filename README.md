@@ -40,5 +40,5 @@ git clone git@github.com:grace-mao23/P04_Mykolyangelo.git
 2. Run the app in development mode
 
 ```bash
-make nix
+make
 ```

@@ -27,7 +27,7 @@ switcher = {
 }
 
 
-class Processor:
+class Processor():
     def __init__(self, filestream):
         csv_reader = reader(filestream)
         self.__headers = next(csv_reader, None)
@@ -69,7 +69,7 @@ def migrate(filepath, iso):
 
     csv_file = {}
 
-    with open(filepath, mode="r", encoding="utf-8-sig") as f:
+    with open(filepath, mode='r', encoding='utf-8-sig') as f:
         csv_file = Processor(f)
 
     for row in csv_file:

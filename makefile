@@ -3,7 +3,6 @@ APP_DATASET := data.csv
 VIRT_PYTHON := env/bin/python3
 VIRT_PIP := env/bin/pip
 
-
 all: setup
 	@export FLASK_APP=app
 ifneq ($(wildcard instance/climate.sqlite),)
