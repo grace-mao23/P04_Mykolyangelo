@@ -11,8 +11,6 @@ class Country(SQLAlchemyObjectType):
 
 
 class CountryQuery(graphene.ObjectType):
-    node = graphene.relay.Node.Field()
-
     # begin: Available Queries
 
     all_countries = graphene.List(Country)
