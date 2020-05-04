@@ -19,6 +19,8 @@ COUNTRY_QUERY = """
 """
 
 
+
+
 def format_climate_change_query(country_code):
     codes = tuple([country_code for i in range(3)])
     return (
@@ -59,10 +61,21 @@ def index():
 
 @bp.route("/country/<int:country_code>")
 def country(country_code):
+    # CO2_QUERY = '''
+    # {
+    #   co2EmissionByCode(code: %d) {
+    #     year
+    #     amount
+    #   }
+    # }
+    # ''' % country_code
+    # info = schema.execute(CO2_QUERY)
+    # print(info.data[0])
     country = Country.query.filter_by(country_code=country_code).first()
     if country is None:
         return redirect(url_for("index"))
     result = schema.execute(format_climate_change_query(country_code))
+    print(json.loads(json.dumps((result.data)))["co2EmissionByCode"])
     return render_template(
-        "country.html", country=country, data=json.dumps(result.data)
+        "country.html", country=country, data=json.dumps(result.data), info=json.loads(json.dumps((result.data)))["co2EmissionByCode"]
     )

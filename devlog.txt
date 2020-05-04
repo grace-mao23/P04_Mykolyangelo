@@ -1,3 +1,10 @@
+chenT -- 2020-05-04 10:25
+- begin works on frontend (tested cover, map, etc)
+
+zouJ -- 2020-05-03 23:17
+- working on queries
+- show on page amount of co2 emission every year
+
 graceM -- 2020-04-26 23:08
 - design doc version 1.0 uploaded
 - devlog created
@@ -13,17 +20,17 @@ juntaoL-- 2020-04-28 15:02
 graceM -- 2020-04-29 14:00
 - updated design doc
 - reviewed by JEeBerS and ihatequarantine
-- ihatequarantine noted to specify PM, alphabetize names, add a 
+- ihatequarantine noted to specify PM, alphabetize names, add a
 timeline, and update README
-- JEeBerS noted to specify PM, explain where world globe data was 
+- JEeBerS noted to specify PM, explain where world globe data was
 retrieved from, and highlight the statistics for each country
 - modifications:
 	- specified PM, reordered names
 	- added approximate dates of completion for development stages
-	- explained use of topojson and source code for the globe 
+	- explained use of topojson and source code for the globe
 	- display of statistics added to the development stages timeline
-- timeline adjusted for due date with focus that up until 5/4 would be 
-focused on backend database management, and D3 work would start after 
+- timeline adjusted for due date with focus that up until 5/4 would be
+focused on backend database management, and D3 work would start after
 data is easily retrieved in order to avoid messes
 
 juntaoL -- 2020-4-29 15:30
@@ -32,7 +39,7 @@ juntaoL -- 2020-4-29 15:30
 
 graceM -- 2020-04-30 14:17
 - added launch codes to the readme
-- going through countries that don't cross reference in topojson and our 
+- going through countries that don't cross reference in topojson and our
 data
 
 juntaoL -- 2020-5-03 11:55
