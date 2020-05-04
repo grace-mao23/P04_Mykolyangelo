@@ -75,7 +75,7 @@ def country(country_code):
     if country is None:
         return redirect(url_for("index"))
     result = schema.execute(format_climate_change_query(country_code))
-    #print(json.loads(json.dumps((result.data)))["co2EmissionByCode"])
+    print(json.loads(json.dumps((result.data)))["co2EmissionByCode"])
     return render_template(
         "country.html", country=country, data=json.dumps(result.data), info=json.loads(json.dumps((result.data)))["co2EmissionByCode"]
     )
