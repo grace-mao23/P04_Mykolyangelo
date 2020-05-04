@@ -1,3 +1,6 @@
+chenT -- 2020-05-04 10:25
+- begin works on frontend (tested cover, map, etc)
+
 zouJ -- 2020-05-03 23:17
 - working on queries
 - show on page amount of co2 emission every year
