@@ -4,6 +4,12 @@
 
 {% block main %}
 <h5>Hello {{ country.country_name }}!</h5>
+
+{% for block in info %}
+  <p>{{block['year']}}: {{block['amount']}}</p>
+
+{% endfor %}
+
 {% endblock %}
 
 {% block script %}
