@@ -1,5 +1,6 @@
 zouJ -- 2020-05-03 23:17
-- working on queries 
+- working on queries
+- show on page amount of co2 emission every year
 
 graceM -- 2020-04-26 23:08
 - design doc version 1.0 uploaded
