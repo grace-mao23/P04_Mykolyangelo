@@ -1,6 +1,32 @@
+import json
+
+from sqlalchemy import PickleType, BLOB
 from sqlalchemy.ext.declarative import declared_attr
 
 from app import db
+
+
+class SimpleJSONType(PickleType):
+    impl = BLOB
+
+    def __init__(self, *args, **kwargs):        
+        super(SimpleJSONType, self).__init__(*args, **kwargs)
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            value = json.dumps(value)
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = json.loads(value)
+        return value
+
+
+class JSONCache(db.Model):
+    __tablename__ = "cache"
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(SimpleJSONType)
 
 
 class Country(db.Model):
