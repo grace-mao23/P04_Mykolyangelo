@@ -1,10 +1,3 @@
-chenT -- 2020-05-04 10:25
-- begin works on frontend (tested cover, map, etc)
-
-zouJ -- 2020-05-03 23:17
-- working on queries
-- show on page amount of co2 emission every year
-
 graceM -- 2020-04-26 23:08
 - design doc version 1.0 uploaded
 - devlog created
@@ -45,3 +38,15 @@ data
 juntaoL -- 2020-5-03 11:55
 - added country blueprint
 - added more GraphQL queries
+
+jacksonZ -- 2020-05-03 23:17
+- working on queries
+- show on page amount of co2 emission every year
+
+tammyC -- 2020-05-04 10:25
+- begin works on frontend (tested cover, map, etc)
+
+graceM -- 2020-05-04 23:32
+- uploaded design doc version 3 with new development stages
+- fixed devlog
+- officially assigned roles for d3 visualizations
