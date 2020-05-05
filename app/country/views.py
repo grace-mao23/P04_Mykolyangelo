@@ -1,9 +1,9 @@
 import json
 
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, g
 
 from app import db
-from app.graphql.models import Country
+from app.graphql.models import (Country, JSONCache)
 from app.graphql.schema import schema
 
 bp = Blueprint("country", __name__, url_prefix="", template_folder="templates")
@@ -73,7 +73,8 @@ def format_world_stats_query(year):
 @bp.route("/")
 def index():
     result = schema.execute(COUNTRY_QUERY)
-    return render_template("index.html", data=list(result.data["allCountries"]))
+    countries_topojson = JSONCache.query.all()[0].data
+    return render_template("index.html", data=list(result.data["allCountries"]), countries_topojson=countries_topojson)
 
 
 @bp.route("/country/<int:country_code>")
@@ -82,7 +83,7 @@ def country(country_code):
     if country is None:
         return redirect(url_for("index"))
     result = schema.execute(format_climate_change_query(country_code))
-    print(json.loads(json.dumps((result.data)))["co2EmissionByCode"])
+    # print(json.loads(json.dumps((result.data)))["co2EmissionByCode"])
     return render_template(
         "country.html", country=country, data=json.dumps(result.data), info=json.loads(json.dumps((result.data)))["co2EmissionByCode"]
     )

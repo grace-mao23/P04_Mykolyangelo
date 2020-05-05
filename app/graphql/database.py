@@ -3,6 +3,7 @@ from sys import maxsize, stdout
 
 from app import db
 from app.graphql.models import (
+    JSONCache,
     Country,
     CO2Emission,
     CO2EmissionPerCapita,
@@ -63,9 +64,11 @@ class Processor():
         return self.__inner[self.__index]
 
 
-def migrate(filepath, iso):
+def migrate(filepath, iso, countries_topojson):
     db.drop_all()
     db.create_all()
+
+    db.session.add(JSONCache(data=countries_topojson))
 
     csv_file = {}
 

@@ -3,7 +3,7 @@ import click
 import json
 
 from csv import DictReader
-from flask import Flask, render_template
+from flask import Flask, render_template, g
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
 
@@ -39,13 +39,17 @@ def init_db(filename):
     from app.graphql.database import migrate
     
     iso = {}
+    countries_topojson = {}
+
+    with open(os.path.join(os.path.dirname(__file__), 'static/countries-50m.json'), mode="r") as f:
+        countries_topojson = json.load(f)
 
     with open(
         os.path.join(os.path.dirname(__file__), "static/iso-codes.json"), mode="r"
     ) as f:
         iso = json.load(f)
 
-    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso)
+    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso, countries_topojson)
 
 
 @click.command("init-db")
