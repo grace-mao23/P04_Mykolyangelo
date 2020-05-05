@@ -3,6 +3,10 @@
 {% block title %}{% endblock %}
 
 {% block main %}
+
+<a href="/worldstats">World Stats</a>
+<br>
+<br>
 {# Below is just for testing #}
 {% for country in data %}
 <li><a href="/country/{{ country.countryCode }}">{{ country.countryName }}</a></li>

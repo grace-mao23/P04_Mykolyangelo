@@ -50,3 +50,6 @@ graceM -- 2020-05-04 23:32
 - uploaded design doc version 3 with new development stages
 - fixed devlog
 - officially assigned roles for d3 visualizations
+
+zouJ -- 2020-05-05 18:06
+- trying to create line graph
