@@ -9,21 +9,50 @@
 <p>{{block['year']}}: {{block['amount']}}</p>
 
 {% endfor %}
+<div id="chart"></div>
 
 {% endblock %}
 
 {% block script %}
+<script src="https://d3js.org/d3.v4.js"></script>
 <script type='text/javascript'>
-  const data = JSON.parse('{{ data|safe }}');
-  console.log(data);
-  const carbonData = data['co2EmissionByCode'];
+  const original = JSON.parse('{{ data|safe }}');
+  console.log(original);
+  const carbonData = original['co2EmissionByCode'];
   console.log(carbonData);
   var i = 0;
+  var data = {};
+  data["year"] = [];
+  data["amount"] = [];
   for (; i < carbonData.length; i++ ){
-    console.log(carbonData[i]['year']);
-    console.log(carbonData[i]['amount']);
+    data['year'].push(carbonData[i]['year']);
+    data['amount'].push(carbonData[i]['amount']);
   };
+  console.log(data['year']);
+  console.log(data['amount']);
   console.log("done");
+
+
+  /*
+  var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+  function(data) {
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return d.date; }))
+      .range([ 0, width ]);
+    xAxis = svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
   /*
   for (i = 0, i < data.length; i++) {
     console.log(data[i]);
