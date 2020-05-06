@@ -15,5 +15,20 @@
 {% block script %}
 <script type='text/javascript'>
   const data = JSON.parse('{{ data|safe }}');
+  console.log(data);
+  const carbonData = data['co2EmissionByCode'];
+  console.log(carbonData);
+  var i = 0;
+  for (; i < carbonData.length; i++ ){
+    console.log(carbonData[i]['year']);
+    console.log(carbonData[i]['amount']);
+  };
+  console.log("done");
+  /*
+  for (i = 0, i < data.length; i++) {
+    console.log(data[i]);
+  };
+  */
 </script>
+
 {% endblock %}
