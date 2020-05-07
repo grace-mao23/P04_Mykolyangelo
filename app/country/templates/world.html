@@ -3,69 +3,68 @@
 {% block title %} {% endblock %}
 
 {% block main %}
-  <div id="line_graph">
-    <svg width="460" height="400" style="border: 1px solid;"> </svg>
-  </div>
+<div id="line_graph">
+  <svg width="460" height="400" style="border: 1px solid;"> </svg>
+</div>
 {% endblock %}
 
 {% block script %}
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script type="text/javascript">
-    console.log("hkne")
+<script src="{{ url_for('static', filename='assets/d3.min.js') }}"></script>
+<script type="text/javascript">
 
-    //yearly data of total emissions
-    data = {{data}}
+  //yearly data of total emissions
+  const data = {{ data | safe }};
 
-    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    var svg = d3.select("#line_graph")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .attr("style". "border: 1px solid;")
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  // append the svg object to the body of the page
+  var svg = d3.select("#line_graph")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("style", "border: 1px solid;")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var n = data.length
-    var x = d3.scaleLinear()
-      .domain([0, n-1])
-      .range([0, width])
+  var n = data.length
+  var x = d3.scaleLinear()
+    .domain([0, n - 1])
+    .range([0, width])
 
-    var y = d3.scaleLinear()
-      .domain([0, 1])
-      .range([0, width])
+  var y = d3.scaleLinear()
+    .domain([0, 1])
+    .range([0, width])
 
-    var line = d3.line()
-      .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-      .y(function(d) { return yScale(d.y); }) // set the y values for the line generator
-      .curve(d3.curveMonotoneX) // apply smoothing to the line
+  var line = d3.line()
+    .x(function (d, i) { return xScale(i); }) // set the x values for the line generator
+    .y(function (d) { return yScale(d.y); }) // set the y values for the line generator
+    .curve(d3.curveMonotoneX) // apply smoothing to the line
 
-    // 3. Call the x axis in a group tag
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x)); // Create an axis component with d3.axisBottom
+  // 3. Call the x axis in a group tag
+  svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x)); // Create an axis component with d3.axisBottom
 
-    // 4. Call the y axis in a group tag
-    svg.append("g")
-      .attr("class", "y axis")
-      .call(d3.axisLeft(y)); // Create an axis component with d3.axisLeft
+  // 4. Call the y axis in a group tag
+  svg.append("g")
+    .attr("class", "y axis")
+    .call(d3.axisLeft(y)); // Create an axis component with d3.axisLeft
 
-    svg.selectAll(".dot")
-        .data(data)
-      .enter().append("circle") // Uses the enter().append() method
-      .attr("class", "dot") // Assign a class for styling
-      .attr("cx", function(d, i) { return xScale(i) })
-      .attr("cy", function(d) { return yScale(d.y) })
-      .attr("r", 5)
-        .on("mouseover", function(a, b, c) {
-    			console.log(a)
-          this.attr('class', 'focus')
-  		})
-        .on("mouseout", function() {  })
-  </script>
+  svg.selectAll(".dot")
+    .data(data)
+    .enter().append("circle") // Uses the enter().append() method
+    .attr("class", "dot") // Assign a class for styling
+    .attr("cx", function (d, i) { return xScale(i) })
+    .attr("cy", function (d) { return yScale(d.y) })
+    .attr("r", 5)
+    .on("mouseover", function (a, b, c) {
+      console.log(a)
+      this.attr('class', 'focus')
+    })
+    .on("mouseout", function () { })
+</script>
 
 {% endblock %}

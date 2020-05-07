@@ -15,12 +15,12 @@ from app.graphql.models import (
     ElectricConsumption,
 )
 
-
 switcher = {
     "CO2 emissions (kt)": CO2Emission,
     "CO2 emissions (metric tons per capita)": CO2EmissionPerCapita,
     "Methane emissions (kt of CO2 equivalent)": MethaneEmission,
-    "Total greenhouse gas emissions (kt of CO2 equivalent)": GreenhouseGasEmission,
+    "Total greenhouse gas emissions (kt of CO2 equivalent)":
+    GreenhouseGasEmission,
     "Population growth (annual %)": PopulationGrowth,
     "Population, total": Population,
     "Access to electricity (% of population)": AccessToElectricity,
@@ -85,7 +85,8 @@ def migrate(filepath, iso, countries_topojson):
             if code["alpha-3"] == row["Country Code"]:
                 current_code = code["country-code"]
                 country = Country(
-                    country_code=code["country-code"], country_name=row["Country Name"],
+                    country_code=code["country-code"],
+                    country_name=row["Country Name"],
                 )
                 db.session.add(country)
                 break

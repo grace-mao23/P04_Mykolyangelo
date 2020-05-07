@@ -13,9 +13,8 @@ class PopulationGrowth(SQLAlchemyObjectType):
 class PopulationGrowthQuery(graphene.ObjectType):
     # begin: Available Queries
 
-    population_growth_by_code = graphene.List(
-        lambda: PopulationGrowth, code=graphene.Int()
-    )
+    population_growth_by_code = graphene.List(lambda: PopulationGrowth,
+                                              code=graphene.Int())
 
     # end
 

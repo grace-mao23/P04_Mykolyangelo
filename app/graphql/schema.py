@@ -15,16 +15,16 @@ from app.graphql.schemas import (
 
 
 class Query(
-    CountryQuery,
-    CO2EmissionQuery,
-    MethaneEmissionQuery,
-    GreenhouseGasEmissionQuery,
-    CO2EmissionPerCapitaQuery,
-    PopulationQuery,
-    PopulationGrowthQuery,
-    AccessToElectricityQuery,
-    ElectricConsumptionQuery,
-    graphene.ObjectType,
+        CountryQuery,
+        CO2EmissionQuery,
+        MethaneEmissionQuery,
+        GreenhouseGasEmissionQuery,
+        CO2EmissionPerCapitaQuery,
+        PopulationQuery,
+        PopulationGrowthQuery,
+        AccessToElectricityQuery,
+        ElectricConsumptionQuery,
+        graphene.ObjectType,
 ):
     """Collection of Query Classes"""
 

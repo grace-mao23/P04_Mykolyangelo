@@ -18,7 +18,7 @@ const graticule = d3.geoGraticule();
 
 // Rotation
 const rotationConfig = {
-  speed: 0.006,
+  speed: 0.01,
   verticalTilt: -15,
   horizontalTilt: 0
 };

@@ -35,27 +35,28 @@ def create_app(test_config=None):
 
 
 def init_db(filename):
-    click.echo("Beginning the migration process. This can take a while.")
     from app.graphql.database import migrate
-    
+
     iso = {}
     countries_topojson = {}
 
-    with open(os.path.join(os.path.dirname(__file__), 'static/countries-50m.json'), mode="r") as f:
+    with open(os.path.join(os.path.dirname(__file__),
+                           'static/countries-50m.json'),
+              mode="r") as f:
         countries_topojson = json.load(f)
 
-    with open(
-        os.path.join(os.path.dirname(__file__), "static/iso-codes.json"), mode="r"
-    ) as f:
+    with open(os.path.join(os.path.dirname(__file__), "static/iso-codes.json"),
+              mode="r") as f:
         iso = json.load(f)
 
-    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso, countries_topojson)
+    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso,
+            countries_topojson)
 
 
 @click.command("init-db")
 @click.argument("filename")
 @with_appcontext
 def init_db_command(filename):
-    """Clear existing data and create new tables."""
+    click.echo("Beginning the migration process. This can take a while.")
     init_db(filename)
     click.echo("Initialized the database.")

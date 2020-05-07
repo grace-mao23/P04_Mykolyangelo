@@ -8,7 +8,7 @@ from app.graphql.schemas.country import Country
 class Population(SQLAlchemyObjectType):
     class Meta:
         model = Population
-        interfaces = (graphene.relay.Node,)
+        interfaces = (graphene.relay.Node, )
 
 
 class PopulationQuery(graphene.ObjectType):
@@ -17,7 +17,8 @@ class PopulationQuery(graphene.ObjectType):
     # begin: Available Queries
 
     all_populations = SQLAlchemyConnectionField(Population)
-    population_by_code = graphene.Field(lambda: Population, code=graphene.Int())
+    population_by_code = graphene.Field(lambda: Population,
+                                        code=graphene.Int())
 
     # end
 
