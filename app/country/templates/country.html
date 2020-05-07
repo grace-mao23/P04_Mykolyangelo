@@ -59,6 +59,9 @@
           "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scaleLinear()
+      //.domain(([d3.min(data['year']), d3.max(data['year'])]))
+      //.domain(d3.extent(data, function (d) { return d.x; }))
+
       .domain([d3.min(data['year']), d3.max(data['year'])])
       .range([ 0, width ]);
     xAxis = svg.append("g")
@@ -90,8 +93,8 @@
       .datum(list)
       .attr("class", "line")  // I add the class line to be able to modify this line later on.
       .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.0)
       .attr("d", d3.line()
         .x(function(d){ return x(d.x); })
         .y(function(d){ return y(d.y); }));
@@ -130,7 +133,7 @@
     }
 
     svg.on("dblclick",function(){
-      x.domain(d3.extent(data, function(d) { return d.date; }))
+      x.domain([d3.min(data['year']), d3.max(data['year'])])
       xAxis.transition().call(d3.axisBottom(x))
       line
         .select('.line')
