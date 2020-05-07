@@ -62,6 +62,10 @@ graceM -- 2020-05-06 00:43
 - added bootstrap to index template
 - moved globe javascript to static
 
+tammyC -- 2020-05-06 3:23
+- added country line graph (mvp) -- still need to fix the x-axis, add labels, etc
+- added feature to zoom in on year interval 
+
 juntaoL -- 2020-05-07 00:17
 - added bundler to make our js dependencies smaller
 - added more GraphQL queries
