@@ -32,6 +32,18 @@
   console.log(data['amount']);
   console.log("done");
 
+  var list = [];
+  for (var i = 0; i < data['year'].length; i++) {
+    list.push({ x: data['year'][i], y: data['amount'][i] })
+    console.log("added");
+  }
+  console.log(list);
+
+  for (var i = 0; i < list.length; i++) {
+    //console.log(list[i]['x'])
+    //console.log(list[i]['y'])
+  }
+
   // D3 Chart
 
   var margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -47,14 +59,14 @@
       "translate(" + margin.left + "," + margin.top + ")");
 
   var x = d3.scaleLinear()
-    .domain(d3.extent(data['year']))
+    .domain([d3.min(data['year']), d3.max(data['year'])])
     .range([0, width]);
   xAxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
 
   var y = d3.scaleLinear()
-    .domain([0, d3.max(data['amount'])])
+    .domain([0, d3.max(data['amount']) + (0.1 * d3.max(data['amount']))])
     .range([height, 0]);
   yAxis = svg.append("g")
     .call(d3.axisLeft(y));
@@ -75,15 +87,15 @@
     .attr("clip-path", "url(#clip)")
 
   line.append("path")
-    .datum(data)
+    .datum(list)
     .attr("class", "line")  // I add the class line to be able to modify this line later on.
     .attr("fill", "none")
     .attr("stroke", "steelblue")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
-      .x(function (d) { return x(data['year']) })
-      .y(function (d) { return y(data['amount']) })
-    )
+      .x(function (d) { return x(d.x); })
+      .y(function (d) { return y(d.y); }));
+
 
   line
     .append("g")
@@ -113,9 +125,8 @@
       .transition()
       .duration(1000)
       .attr("d", d3.line()
-        .x(function (d) { return x(d.date) })
-        .y(function (d) { return y(d.value) })
-      )
+        .x(function (d) { return x(d.x); })
+        .y(function (d) { return y(d.y); }))
   }
 
   svg.on("dblclick", function () {
@@ -125,9 +136,8 @@
       .select('.line')
       .transition()
       .attr("d", d3.line()
-        .x(function (d) { return x(d.date) })
-        .y(function (d) { return y(d.value) })
-      )
+        .x(function (d) { return x(d.x); })
+        .y(function (d) { return y(d.y); }))
   });
 
   /*

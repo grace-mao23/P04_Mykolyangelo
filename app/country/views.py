@@ -9,8 +9,7 @@ from app.graphql.schema import schema
 bp = Blueprint("country",
                __name__,
                url_prefix="",
-               template_folder="templates",
-               static_folder="statics")
+               template_folder="templates")
 
 COUNTRY_QUERY = """
 {

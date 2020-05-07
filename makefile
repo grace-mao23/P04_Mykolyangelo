@@ -15,6 +15,11 @@ endif
 	FLASK_ENV=development $(VIRT_PYTHON) -m flask run
 
 
+routes:
+	@export FLASK_APP=app
+	FLASK_ENV=development $(VIRT_PYTHON) -m flask routes
+
+
 setup: venv requirements.txt
 	$(VIRT_PIP) install -r requirements.txt --quiet
 	$(VIRT_PIP) list
