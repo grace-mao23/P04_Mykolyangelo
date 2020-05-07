@@ -13,7 +13,7 @@ class CO2Emission(SQLAlchemyObjectType):
 class CO2EmissionQuery(graphene.ObjectType):
     # begin: Available Queries
 
-    all_co2_emission = graphene.List(CO2Emission)
+    all_co2_emissions = graphene.List(CO2Emission)
 
     co2_emission_by_code = graphene.List(lambda: CO2Emission,
                                          code=graphene.Int())
@@ -25,7 +25,7 @@ class CO2EmissionQuery(graphene.ObjectType):
 
     # begin: CO2Emission Resolvers
 
-    def resolve_all_co2_emission(self, info):
+    def resolve_all_co2_emissions(self, info):
         return CO2Emission.get_query(info).all()
 
     def resolve_co2_emission_by_code(self, info, code):

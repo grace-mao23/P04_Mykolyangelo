@@ -6,10 +6,7 @@ from app import db
 from app.graphql.models import (Country, JSONCache)
 from app.graphql.schema import schema
 
-bp = Blueprint("country",
-               __name__,
-               url_prefix="",
-               template_folder="templates")
+bp = Blueprint("country", __name__, url_prefix="", template_folder="templates")
 
 COUNTRY_QUERY = """
 {
@@ -22,7 +19,7 @@ COUNTRY_QUERY = """
 
 CO2_EMISSION_QUERY = """
 {
-  allCo2Emission {
+  allCo2Emissions {
     country {
       countryName
     }
@@ -78,15 +75,13 @@ def country(country_code):
     if country is None:
         return redirect(url_for("index"))
     result = schema.execute(format_climate_change_query(country_code))
-    return render_template(
-        "country.html",
-        country=country,
-        data=json.dumps(result.data),
-        # TODO: What is this (\/) for when there is this (^)?
-        info=json.loads(json.dumps((result.data)))["co2EmissionByCode"])
+    return render_template("country.html",
+                           country=country,
+                           data=json.dumps(result.data))
 
 
 @bp.route("/worldstats")
 def worldstats():
-    result = schema.execute(CO2_EMISSION_QUERY).data
-    return render_template("world.html", data=list(result['allCo2Emission']))
+    result = schema.execute(CO2_EMISSION_QUERY).data['allCo2Emissions']
+    print(result)
+    return render_template("world.html", data=list(result))
