@@ -9,7 +9,7 @@ from app import db
 class SimpleJSONType(PickleType):
     impl = BLOB
 
-    def __init__(self, *args, **kwargs):        
+    def __init__(self, *args, **kwargs):
         super(SimpleJSONType, self).__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
@@ -47,7 +47,9 @@ class CountryOutput(object):
     def country(cls):
         return db.relationship(
             Country,
-            backref=db.backref(cls.__tablename__, uselist=True, cascade="delete,all"),
+            backref=db.backref(cls.__tablename__,
+                               uselist=True,
+                               cascade="delete,all"),
         )
 
     year = db.Column(db.Integer)

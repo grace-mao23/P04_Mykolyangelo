@@ -7,7 +7,7 @@ from app.graphql.models import Country
 class Country(SQLAlchemyObjectType):
     class Meta:
         model = Country
-        interfaces = (graphene.relay.Node,)
+        interfaces = (graphene.relay.Node, )
 
 
 class CountryQuery(graphene.ObjectType):

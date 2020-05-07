@@ -14,12 +14,10 @@ class CO2EmissionPerCapitaQuery(graphene.ObjectType):
     # begin: Available Queries
 
     co2_emission_per_capita_by_code = graphene.List(
-        lambda: CO2EmissionPerCapita, code=graphene.Int()
-    )
+        lambda: CO2EmissionPerCapita, code=graphene.Int())
 
     all_co2_emission_per_capita_by_code = graphene.Field(
-        lambda: CO2EmissionPerCapita, year=graphene.Int()
-    )
+        lambda: CO2EmissionPerCapita, year=graphene.Int())
 
     # end
 

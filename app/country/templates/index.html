@@ -29,47 +29,47 @@ stroke-width: 1.5px;
 {% block title %}Home{% endblock %}
 
 {% block main %}
-  <div class="jumbotron">
-    <h1 class="display-3">Climate Change is Real</h1>
-    <p class="lead">Welcome to our data visualization for climate change analysis around the world!
-                    Click and drag on the globe to rotate it.
-                    To see the CO2 emissions, methane emissions, and other data for a specific country,
-                    please locate it on the globe and just click! To see the world statistics,
-                    click on the button below.
+<div class="jumbotron">
+  <h1 class="display-3">Climate Change is Real</h1>
+  <p class="lead">Welcome to our data visualization for climate change analysis around the world!
+    Click and drag on the globe to rotate it.
+    To see the CO2 emissions, methane emissions, and other data for a specific country,
+    please locate it on the globe and just click! To see the world statistics,
+    click on the button below.
     <br><br>
     <a class="btn btn-success btn-lg" href="/worldstats" role="button">The World</a>
 
-  </div>
+</div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <div id="globe"></div>
-      </div>
-      <div class="col-4">
-        <div class="card" style="background-color: #c4f1f5;">
-          <div class="card-body">
-            <h4 class="card-title">See Our Data!</h4>
-            <p class="card-text">
-              Our data is retrieved from the World Bank, and lists the greenhouse gas emissions in different countries
-              over the years starting from 1960 to 2018.
-              Find our data <a href="https://data.worldbank.org/topic/climate-change">here!</a>
-            </p>
-          </div>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div id="globe"></div>
+    </div>
+    <div class="col-4">
+      <div class="card" style="background-color: #c4f1f5;">
+        <div class="card-body">
+          <h4 class="card-title">See Our Data!</h4>
+          <p class="card-text">
+            Our data is retrieved from the World Bank, and lists the greenhouse gas emissions in different countries
+            over the years starting from 1960 to 2018.
+            Find our data <a href="https://data.worldbank.org/topic/climate-change">here!</a>
+          </p>
         </div>
+      </div>
 
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-2"></div>
-      <div class="col-6">
-        <center>
-        <h3 id="selected_country"></h3>
-        </center>
-      </div>
     </div>
   </div>
+  <br>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-6">
+      <center>
+        <h3 id="selected_country"></h3>
+      </center>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 

@@ -13,9 +13,8 @@ class AccessToElectricity(SQLAlchemyObjectType):
 class AccessToElectricityQuery(graphene.ObjectType):
     # begin: Available Queries
 
-    access_to_electricity_by_code = graphene.List(
-        lambda: AccessToElectricity, code=graphene.Int()
-    )
+    access_to_electricity_by_code = graphene.List(lambda: AccessToElectricity,
+                                                  code=graphene.Int())
 
     # end
 
