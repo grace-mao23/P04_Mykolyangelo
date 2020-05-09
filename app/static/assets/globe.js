@@ -113,12 +113,13 @@ const render = () => {
 
   context.beginPath();
   path({ type: "Sphere" });
+  context.strokeStyle = "#ffffff";
   context.stroke();
 
   if (selectedCountryObject !== null) {
     context.beginPath();
     path(selectedCountryObject);
-    context.fillStyle = "#fff263";
+    context.fillStyle = "#6a1b9a";
     context.fill();
 
     context.font = "bold 16px monospace";
