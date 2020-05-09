@@ -2,6 +2,8 @@
 
 export {
   select,
+  selectAll,
+  transition,
   geoPath,
   geoOrthographic,
   geoGraticule,
@@ -20,5 +22,13 @@ export {
   brushX,
   drag,
   now,
-  json
+  json,
+  axisRight,
+  scaleBand,
+  ticks,
+  ascending,
+  scaleOrdinal,
+  easeLinear,
+  create,
+  scaleUtc
 } from "d3";
