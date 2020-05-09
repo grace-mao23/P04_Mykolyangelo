@@ -68,7 +68,7 @@ def migrate(filepath, iso, countries_topojson):
     db.drop_all()
     db.create_all()
 
-    db.session.add(JSONCache(data=countries_topojson))
+    db.session.add(JSONCache(data_name="topojson", data=countries_topojson))
 
     csv_file = {}
 

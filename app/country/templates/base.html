@@ -4,23 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    {
-      % block style %
-    }
-
-    /*
-    body {
-      background-image: url('https://images.unsplash.com/photo-1445999794508-1e24b2f535ab?ixlib=rb-1.2.1&w=1000&q=80');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-    */
-      {
-      % endblock %
-    }
-  </style>
+  {% block style %}{% endblock %}
   <title>{% block title %}{% endblock %} | Climate Change</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -31,13 +15,8 @@
   {% block main %}{% endblock %}
 
   {% block footer %}
-  <footer>
-    <hr>
-    <center>
-      <span>Copyright &copy; Mykolyangelo 2020</span>
-    </center>
-    <br>
-    <br>
+  <footer class="fixed-bottom mx-auto text-center text-light mb-2">
+    <span>Copyright &copy; Mykolyangelo 2020</span>
   </footer>
   {% endblock %}
 

@@ -1,32 +1,68 @@
 // Country Variables
-const countries = topojson.feature(world_data, world_data.objects.countries);
-const selectedCountry = d3.select("#selected_country");
-let selectedCountryObject = {};
+let land;
+let countries;
+let selectedCountryObject = null;
 
-// Globe Constants
-const width = 960, height = 500;
+// Globe Variables
+let width = window.innerWidth, height = window.innerHeight;
 const context = d3.select("#globe")
   .insert("canvas")
   .attr("width", width)
   .attr("height", height)
   .node()
   .getContext("2d");
-const projection = d3.geoOrthographic()
-  .precision(0.1);
+// Canvas Based
+const projection = d3.geoOrthographic();
 const path = d3.geoPath(projection, context);
 const graticule = d3.geoGraticule();
+// SVG Based
+const svgProjection = d3.geoOrthographic()
+  .scale(100)
+  .translate([100, 100])
+  .clipAngle(90);
+const svgPath = d3.geoPath(svgProjection);
+const lambda = d3.scaleLinear()
+  .domain([0, 200])
+  .range([-180, 180]);
+const svg = d3.select("#mini-globe")
+  .append("svg")
+  .attr("style", "background: #0077be; border-radius: 200px;")
+  .attr("width", 200)
+  .attr("height", 200);
 
 // Rotation
+// Canvas Based
+let autorotate, canvasRotation = false, svgRotation = true;
+let lastTimed = d3.now(), svgLastTimed = d3.now();
 const rotationConfig = {
-  speed: 0.01,
+  speed: 0.006,
   verticalTilt: -15,
   horizontalTilt: 0
 };
 const rotate = (elapsed) => {
-  projection.rotate([rotationConfig.speed * elapsed, rotationConfig.verticalTilt, rotationConfig.horizontalTilt]);
-  render();
+  let now = d3.now();
+  if ((now - lastTimed) < elapsed) {
+    if (canvasRotation === true) {
+      projection.rotate([
+        projection.rotate()[0] + rotationConfig.speed * (now - lastTimed),
+        rotationConfig.verticalTilt,
+        rotationConfig.horizontalTilt
+      ]);
+      render();
+    }
+    if (svgRotation === true) {
+      svgProjection.rotate([
+        svgProjection.rotate()[0] + rotationConfig.speed * (now - lastTimed),
+        rotationConfig.verticalTilt,
+        rotationConfig.horizontalTilt
+      ]);
+      svg.selectAll("path")
+        .attr("d", svgPath);
+    }
+
+  }
+  lastTimed = now;
 };
-const autorotate = d3.timer(rotate);
 
 // Drag
 const drag = () => {
@@ -50,59 +86,74 @@ const drag = () => {
 }
 
 // Globe Function
+const scale = () => {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  d3.select("#globe")
+    .attr('width', width)
+    .attr('height', height);
+  projection
+    .scale((0.8 * Math.min(width, height)) / 2)
+    .translate([width / 2, height / 2])
+  render()
+}
+
 const render = () => {
-  const sphere = ({ type: "Sphere" });
-
   context.clearRect(0, 0, width, height);
+
   context.beginPath();
-  path.context(context)(sphere);
-  context.fillStyle = "#fff";
+  path({ type: "Sphere" });
+  context.fillStyle = "#0077be";
   context.fill();
 
   context.beginPath();
-  path.context(context)(countries);
-  context.fillStyle = "#000";
+  path(land);
+  context.fillStyle = "#77dd77";
   context.fill();
 
   context.beginPath();
-  path.context(context)(sphere);
+  path({ type: "Sphere" });
   context.stroke();
 
-  if (selectedCountryObject) {
+  if (selectedCountryObject !== null) {
     context.beginPath();
-    path.context(context)(selectedCountryObject);
-    context.fillStyle = "#a00";
+    path(selectedCountryObject);
+    context.fillStyle = "#fff263";
     context.fill();
+
+    context.font = "bold 16px monospace";
+    context.fillText(selectedCountryObject.properties.name, 50, 50);
   }
 }
 
 // Country Function
+function startRotation() {
+  canvasRotation = true;
+  svgRotation = false;
+}
+
 function findCountry(obj) {
   const position = projection.invert(d3.mouse(obj));
 
-  return attempt = countries.features.find(function (f) {
-    return f.geometry.coordinates.find(function (c1) {
-      return d3.polygonContains(c1, position) || c1.find(function (c2) {
-        return d3.polygonContains(c2, position)
-      })
-    })
-  });
-}
+  const attempt = countries.features.find(({ geometry: { coordinates } }) =>
+    coordinates.find(({ "0": polygon }) => d3.polygonContains(polygon, position))
+  );
+
+  return attempt;
+};
 
 function hover() {
   let attempt = findCountry(this);
 
   if (!attempt) {
-    if (selectedCountry.text()) {
-      selectedCountry.text("");
-      selectedCountryObject = {};
+    if (selectedCountryObject !== null) {
+      selectedCountryObject = null;
       render();
     }
     return;
   }
 
-  if (attempt.properties.name !== selectedCountry.text()) {
-    selectedCountry.text(attempt.properties.name);
+  if (selectedCountryObject === null || attempt.properties.name !== selectedCountryObject.properties.name) {
     selectedCountryObject = attempt;
   }
 
@@ -113,26 +164,57 @@ function redirect() {
   let attempt = findCountry(this);
 
   if (!attempt) {
-    if (selectedCountry.text()) {
-      selectedCountry.text('');
-      selectedCountryObject = {};
+    if (selectedCountryObject !== null) {
+      selectedCountryObject = null;
       render();
     }
     return;
   }
 
-  if (attempt.properties.name !== selectedCountry.text()) {
-    selectedCountry.text(attempt.properties.name);
-    selectedCountryObject = attempt;
-  }
-
   window.location.href = `/country/${attempt.id}`;
-}
+};
 
-d3.select("#globe")
-  .call(drag()
-    .on("drag.render", () => render())
-    .on("end.render", () => render()))
-  .on("click", redirect)
-  .on("mousemove", hover)
-  .call(() => render());
+// Load Data
+const loadData = (callback) => {
+  const query = `
+  {
+    dataByName(dataName:"topojson") {
+      data
+    }
+  }
+  `;
+  d3.json('/graphql', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({ query })
+  })
+    .then(({ data: { dataByName: { data } } }) => callback(JSON.parse(data)));
+};
+
+loadData(function (data) {
+  land = topojson.feature(data, data.objects.land);
+  countries = topojson.feature(data, data.objects.countries);
+
+  svg.append("path")
+    .datum(land)
+    .attr("d", svgPath)
+    .attr("fill", "#77dd77");
+
+  d3.select("#globe")
+    .call(drag()
+      .on("drag.render", () => render())
+      .on("end.render", () => render()))
+    .on("click", redirect)
+    .on("mousemove", hover)
+    .on("mouseover", startRotation)
+    .call(() => render());
+
+  scale();
+
+  window.addEventListener('resize', scale);
+
+  autorotate = d3.timer(rotate);
+});

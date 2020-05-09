@@ -1,83 +1,136 @@
 {% extends 'base.html' %}
 
 {% block style %}
-{{ super() }}
+<style>
+  html {
+    scroll-snap-type: x none;
+    scroll-snap-type: y mandatory;
+    background-color: #ffffff;
+    color: #ffffff;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
-#globe { }
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
-.country {
-fill: #b8b8b8;
-stroke: #fff;
-stroke-width: .5px;
-stroke-linejoin: round;
-}
+  section {
+    background-color: #0d47a1;
+    color: #000000;
+    text-align: center;
+    height: 100vh;
+    scroll-snap-align: start;
+  }
 
-.graticule {
-fill: none;
-stroke: #000;
-stroke-opacity: .3;
-stroke-width: .5px;
-}
+  .inner-section {
+    background-color: #ffffff;
+    width: 85%;
+    height: 85%;
+    transform: translateY(10%);
+    margin: auto;
+  }
 
-.graticule-outline {
-fill: none;
-stroke: #333;
-stroke-width: 1.5px;
-}
+  .heading {
+    background-color: #002171;
+    color: #ffffff;
+    padding: 15px;
+    font-weight: bolder;
+  }
+
+  .description {
+    padding: 15px;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    height: 80%;
+    width: 70%;
+    font-size: 24px;
+  }
+
+  #globe {
+    cursor: move;
+  }
+
+  #mini-globe {
+    cursor: pointer;
+  }
+</style>
 {% endblock %}
 
 {% block title %}Home{% endblock %}
 
 {% block main %}
-<div class="jumbotron">
-  <h1 class="display-3">Climate Change is Real</h1>
-  <p class="lead">Welcome to our data visualization for climate change analysis around the world!
-    Click and drag on the globe to rotate it.
-    To see the CO2 emissions, methane emissions, and other data for a specific country,
-    please locate it on the globe and just click! To see the world statistics,
-    click on the button below.
-    <br><br>
-    <a class="btn btn-success btn-lg" href="/worldstats" role="button">The World</a>
-
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-8">
-      <div id="globe"></div>
+<section>
+  <div class="inner-section">
+    <h1 class="heading">Climate Change is Real</h1>
+    <div class="description">
+      <p>
+        Welcome to our data visualization for climate change analysis around the world using data made available by the
+        <a href="https://data.worldbank.org/topic/climate-change">World Bank</a>!
+      </p>
+      <div id="mini-globe"></div>
+      <a href="#the-globe" class="btn btn-outline-primary mt-3" role="button" aria-pressed="true">Interactive Globe</a>
     </div>
-    <div class="col-4">
-      <div class="card" style="background-color: #c4f1f5;">
-        <div class="card-body">
-          <h4 class="card-title">See Our Data!</h4>
-          <p class="card-text">
-            Our data is retrieved from the World Bank, and lists the greenhouse gas emissions in different countries
-            over the years starting from 1960 to 2018.
-            Find our data <a href="https://data.worldbank.org/topic/climate-change">here!</a>
-          </p>
-        </div>
-      </div>
-
-    </div>
+    <a href="#more-info">
+      <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
+        <path fill-rule="evenodd"
+          d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
+          clip-rule="evenodd" />
+      </svg>
+    </a>
   </div>
-  <br>
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-6">
-      <center>
-        <h3 id="selected_country"></h3>
-      </center>
+</section>
+<section id="more-info">
+  <div class="inner-section">
+    <h1 class="heading">Why is Climate Change Important?</h1>
+    <div class="description">
+      <p>
+        &quot;Climate Change is the defining issue of our time and we are at a defining moment. From shifting weather
+        patterns thatthreaten food production, to rising sea levels that increase the risk of catastrophic flooding, the
+        impacts of climatechange are global in scope and unprecedented in scale. Without drastic action today, adapting
+        to these impacts in the future will be more difficult and costly.&quot;
+        <br>
+        - United Nation
+      </p>
     </div>
+    <a href="#world-stats">
+      <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
+        <path fill-rule="evenodd"
+          d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
+          clip-rule="evenodd" />
+      </svg>
+    </a>
   </div>
-</div>
-
+</section>
+<section id="world-stats">
+  <div class="inner-section">
+    <h1 class="heading">Statistics About Climate Change</h1>
+    <div class="description">
+      <div id="world-graph"></div>
+    </div>
+    <a href="#the-globe">
+      <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
+        <path fill-rule="evenodd"
+          d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
+          clip-rule="evenodd" />
+      </svg>
+    </a>
+  </div>
+</section>
+<section id="the-globe" style="background-color: #000a12;">
+  <div id="globe"></div>
+</section>
 {% endblock %}
 
 {% block script %}
-<script>
-  const data = {{ data | safe }};
-  const world_data = {{ countries_topojson | safe }};
-</script>
 <script src="{{ url_for('static', filename='assets/d3.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/versor.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/topojson.min.js') }}"></script>
