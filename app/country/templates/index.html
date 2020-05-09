@@ -17,7 +17,7 @@
   }
 
   section {
-    background-color: #0d47a1;
+    background-color: #fafafa;
     color: #000000;
     text-align: center;
     height: 100vh;
@@ -30,13 +30,19 @@
     height: 85%;
     transform: translateY(10%);
     margin: auto;
+    -webkit-box-shadow: 0 8px 6px -6px #cccccc;
+    -moz-box-shadow: 0 8px 6px -6px #cccccc;
+    box-shadow: 0 8px 6px -6px #cccccc;
   }
 
   .heading {
-    background-color: #002171;
-    color: #ffffff;
+    background-color: #c7c7c7;
+    color: #000000;
     padding: 15px;
     font-weight: bolder;
+    -webkit-box-shadow: 0 4px 3px -3px #cccccc;
+    -moz-box-shadow: 0 4px 3px -3px #cccccc;
+    box-shadow: 0 4px 3px -3px #cccccc;
   }
 
   .description {
@@ -76,30 +82,7 @@
       <div id="mini-globe"></div>
       <a href="#the-globe" class="btn btn-outline-primary mt-3" role="button" aria-pressed="true">Interactive Globe</a>
     </div>
-    <a href="#more-info">
-      <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
-        <path fill-rule="evenodd"
-          d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
-          clip-rule="evenodd" />
-      </svg>
-    </a>
-  </div>
-</section>
-<section id="more-info">
-  <div class="inner-section">
-    <h1 class="heading">Why is Climate Change Important?</h1>
-    <div class="description">
-      <p>
-        &quot;Climate Change is the defining issue of our time and we are at a defining moment. From shifting weather
-        patterns thatthreaten food production, to rising sea levels that increase the risk of catastrophic flooding, the
-        impacts of climatechange are global in scope and unprecedented in scale. Without drastic action today, adapting
-        to these impacts in the future will be more difficult and costly.&quot;
-        <br>
-        - United Nation
-      </p>
-    </div>
-    <a href="#world-stats">
+    <a href="#world-stats" class="text-dark">
       <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
         <path fill-rule="evenodd"
@@ -115,7 +98,7 @@
     <div class="description">
       <div id="world-graph"></div>
     </div>
-    <a href="#the-globe">
+    <a href="#the-globe" class="text-dark">
       <svg class="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg" style="font-size: 3em;">
         <path fill-rule="evenodd"
@@ -125,14 +108,14 @@
     </a>
   </div>
 </section>
-<section id="the-globe" style="background-color: #000a12;">
+<section id="the-globe">
   <div id="globe"></div>
 </section>
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='assets/d3.min.js') }}"></script>
-<script src="{{ url_for('static', filename='assets/versor.min.js') }}"></script>
-<script src="{{ url_for('static', filename='assets/topojson.min.js') }}"></script>
-<script src="{{ url_for('static', filename='globe.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/min/d3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/min/versor.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/min/topojson.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/globe.js') }}"></script>
 {% endblock %}
