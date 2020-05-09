@@ -69,3 +69,6 @@ tammyC -- 2020-05-06 3:23
 juntaoL -- 2020-05-07 00:17
 - added bundler to make our js dependencies smaller
 - added more GraphQL queries
+
+juntaoL -- 2020-05-09 00:58
+- improved homepage and frame rates
