@@ -43,15 +43,15 @@ def init_db(filename):
     countries_topojson = {}
 
     with open(os.path.join(os.path.dirname(__file__),
-                           'static/countries-50m.json'),
+                           'static/data/countries-50m.json'),
               mode="r") as f:
         countries_topojson = json.load(f)
 
-    with open(os.path.join(os.path.dirname(__file__), "static/iso-codes.json"),
+    with open(os.path.join(os.path.dirname(__file__), "static/data/iso-codes.json"),
               mode="r") as f:
         iso = json.load(f)
 
-    migrate(os.path.join(os.path.dirname(__file__), f"static/{filename}"), iso,
+    migrate(os.path.join(os.path.dirname(__file__), f"static/data/{filename}"), iso,
             countries_topojson)
 
 
