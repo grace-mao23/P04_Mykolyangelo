@@ -7,3 +7,4 @@ from .population import PopulationQuery
 from .population_growth import PopulationGrowthQuery
 from .access_to_electricity import AccessToElectricityQuery
 from .electric_consumption import ElectricConsumptionQuery
+from .json_data import JSONCacheQuery

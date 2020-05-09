@@ -26,6 +26,7 @@ class SimpleJSONType(PickleType):
 class JSONCache(db.Model):
     __tablename__ = "cache"
     id = db.Column(db.Integer, primary_key=True)
+    data_name = db.Column(db.String)
     data = db.Column(SimpleJSONType)
 
 

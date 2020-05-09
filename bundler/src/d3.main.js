@@ -18,5 +18,7 @@ export {
   max,
   extent,
   brushX,
-  drag
+  drag,
+  now,
+  json
 } from "d3";
