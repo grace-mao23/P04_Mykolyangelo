@@ -64,7 +64,8 @@ def format_climate_change_query(country_code):
 def index():
     result = schema.execute(COUNTRY_QUERY).data["allCountries"]
     # countries_topojson = JSONCache.query.all()[0].data
-    return render_template("index.html", data=list(result))
+    print(result[:215])
+    return render_template("index.html", data=list(result)[:215])
 
 
 @bp.route("/country/<int:country_code>")

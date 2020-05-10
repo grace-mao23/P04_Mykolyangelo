@@ -111,6 +111,25 @@
 <section id="the-globe">
   <div id="globe"></div>
 </section>
+<section id="countries">
+  <div class="inner-section">
+    <h1 class="heading">Search by Country</h1>
+    <br>
+    <label for="countryName">Country Name</label>
+    <input type="text" id="countryName" name="countryName">
+    <div id="country"
+      <div>
+      {% for country in data %}
+        {% if loop.index is divisibleby(10) %}
+          </div>
+          <div>
+        {% endif %}
+        <a href="/country/{{country['countryCode']}}">{{country['countryName']}}</a>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block script %}
