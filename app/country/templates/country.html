@@ -184,6 +184,21 @@
       .attr("class", "brush")
       .call(brush);
 
+    svg.append("text")
+      .attr("transform",
+            "translate(" + (width - 345) + " ," +
+                           (height + 30) + ")")
+      .style("font", "14px times")
+      .style("text-anchor", "middle")
+      .text("Year");
+
+    svg.append("text")
+      .attr("transform",
+            "translate(" + (width - 800) + " ," +
+                           (height - 200) + ")")
+      .style("font", "14px times")
+      .style("text-anchor", "middle")
+      .text("Emissions (kilotons)");
     var idleTimeout
     function idled() { idleTimeout = null; }
 
@@ -299,6 +314,22 @@
                   .x(function(d){ return x(d.x); })
                   .y(function(d){ return y(d.y); }));
 
+              svg.append("text")
+                .attr("transform",
+                      "translate(" + (width - 345) + " ," +
+                                     (height + 30) + ")")
+                .style("font", "14px times")
+                .style("text-anchor", "middle")
+                .text("Year");
+
+              svg.append("text")
+                .attr("transform",
+                      "translate(" + (width - 800) + " ," +
+                                     (height - 220) + ")")
+                .style("font", "14px times")
+                .style("text-anchor", "middle")
+                .text("Emissions (kilotons)");
+
               line
               .append("g")
                 .attr("class", "brush")
@@ -399,6 +430,22 @@
                   .attr("height", height )
                   .attr("x", 0)
                   .attr("y", 0);
+
+              svg.append("text")
+                .attr("transform",
+                      "translate(" + (width - 345) + " ," +
+                                     (height + 30) + ")")
+                .style("font", "14px times")
+                .style("text-anchor", "middle")
+                .text("Year");
+
+              svg.append("text")
+                .attr("transform",
+                      "translate(" + (width - 800) + " ," +
+                                     (height - 230) + ")")
+                .style("font", "14px times")
+                .style("text-anchor", "middle")
+                .text("Emissions (kilotons)");
 
               var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
                   .extent( [ [0,0], [width,height] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
