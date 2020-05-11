@@ -78,3 +78,6 @@ juntaoL -- 2020-05-09 16:56
 
 jacksonZ -- 2020-05-10 1:18
 - added individual countries to front page
+
+tammyC -- 2020-05-10 21:43
+- fixed countries page (formatting)
