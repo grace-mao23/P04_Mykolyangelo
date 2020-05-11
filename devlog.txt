@@ -81,3 +81,7 @@ jacksonZ -- 2020-05-10 1:18
 
 tammyC -- 2020-05-10 21:43
 - fixed countries page (formatting)
+
+tammyC -- 2020-05-10 22:59
+- added different charts (co2, methane, greenhouse gas emissions)
+- added buttons for 'transitions', back button, cleaned code up a bit 
