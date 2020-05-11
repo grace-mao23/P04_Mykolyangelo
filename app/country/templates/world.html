@@ -53,6 +53,13 @@
     .attr("class", "y axis")
     .call(d3.axisLeft(y)); // Create an axis component with d3.axisLeft
 
+  svg.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," +
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Date");
+      
   svg.selectAll(".dot")
     .data(data)
     .enter().append("circle") // Uses the enter().append() method

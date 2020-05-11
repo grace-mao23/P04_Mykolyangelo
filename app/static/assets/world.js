@@ -104,6 +104,22 @@ chartLoadData(function (allCo2Emissions) {
   svg.append("g")
     .call(yAxis);
 
+  svg.append("text")
+    .attr("transform",
+          "translate(" + (width/2 - 130) + " ," +
+                         (height - 390) + ")")
+    .style("font", "14px times")
+    .style("text-anchor", "middle")
+    .text("Year");
+
+  svg.append("text")
+    .attr("transform",
+          "translate(" + (80) + " ," +
+                         (height/2 - 200) + ")")
+    .style("font", "14px times")
+    .style("text-anchor", "middle")
+    .text("Emissions (kilotons)");
+
   d3.select("#world-stats")
     .on("mouseover", startChartAnimation);
 
