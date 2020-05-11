@@ -35,7 +35,7 @@ const svg = d3.select("#mini-globe")
 let autorotate, canvasRotation = false, svgRotation = true;
 let lastTimed = d3.now(), svgLastTimed = d3.now();
 const rotationConfig = {
-  speed: 0.006,
+  speed: 0.003,
   verticalTilt: -15,
   horizontalTilt: 0
 };
@@ -130,14 +130,14 @@ const render = () => {
 // Country Function
 function startRotation() {
   canvasRotation = true;
-  svgRotation = false;
+  svgRotation = true;
 }
 
 function findCountry(obj) {
   const position = projection.invert(d3.mouse(obj));
 
   const attempt = countries.features.find(({ geometry: { coordinates } }) =>
-    coordinates.find(({ "0": polygon }) => d3.polygonContains(polygon, position))
+    coordinates.find((c1) => d3.polygonContains(c1, position) || c1.find((c2) => d3.polygonContains(c2, position)))
   );
 
   return attempt;
@@ -210,10 +210,11 @@ loadData(function (data) {
       .on("end.render", () => render()))
     .on("click", redirect)
     .on("mousemove", hover)
-    .on("mouseover", startRotation)
     .call(() => render());
 
   scale();
+
+  startRotation();
 
   window.addEventListener('resize', scale);
 
