@@ -86,5 +86,9 @@ tammyC -- 2020-05-10 22:59
 - added different charts (co2, methane, greenhouse gas emissions)
 - added buttons for 'transitions', back button, cleaned code up a bit
 
-jacksonZ -- 2020-05-11 0:21
+jacksonZ -- 2020-05-11 00:21
 - fixed up d3 graphs and added in chart axes
+
+graceM -- 2020-05-11 01:18
+- final bug fixes to scaling of charts
+- updates to design doc coming soon
