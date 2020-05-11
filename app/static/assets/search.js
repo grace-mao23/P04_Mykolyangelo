@@ -43,7 +43,13 @@ const search = (data, fragment, list) => {
     ({ countryName }) => countryName.toLowerCase().includes(fragment.toLowerCase())
   ).slice(0, 10);
 
-  console.log(filtered)
+  let first = document.createElement("li");
+  first.innerHTML = "Search Result";
+  first.className = "subheading";
+
+  list.appendChild(first);
+
+  list.style.background = '#fafafa';
 
   filtered.forEach(({ countryCode, countryName }) => {
     let item = document.createElement("li");
@@ -69,6 +75,7 @@ document.getElementById("searchCountry").addEventListener(
     }
 
     let inputValue = document.getElementById("searchCountry").value;
+
 
     if (!countryList) {
       searchLoadData(function (allCountries) {
