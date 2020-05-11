@@ -3,7 +3,7 @@ let raw_data, data = [];
 
 // SVG constants
 const chartWidth = 650, chartHeight = 500;
-const margin = [20, 30, 34, 100];
+const margin = [50, 30, 55, 100];
 let startYear, endYear, years, values, index = 0;
 let chartSvg, group, rect;
 let x, y;
@@ -98,7 +98,7 @@ chartLoadData(function (allCo2Emissions) {
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", ".15em")
-    .attr("transform", "rotate(-90)")
+    .attr("transform", "rotate(-60)")
     .attr("font-size", "xx-smaller");;
 
   svg.append("g")
@@ -106,18 +106,10 @@ chartLoadData(function (allCo2Emissions) {
 
   svg.append("text")
     .attr("transform",
-          "translate(" + (width/2 - 130) + " ," +
-                         (height - 390) + ")")
+          "translate(" + (30) + " ," +
+                         (height/2) + "), rotate(-90)")
+    .style("text-anchor", "start")
     .style("font", "14px times")
-    .style("text-anchor", "middle")
-    .text("Year");
-
-  svg.append("text")
-    .attr("transform",
-          "translate(" + (80) + " ," +
-                         (height/2 - 200) + ")")
-    .style("font", "14px times")
-    .style("text-anchor", "middle")
     .text("Emissions (kilotons)");
 
   d3.select("#world-stats")
