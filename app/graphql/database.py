@@ -84,6 +84,8 @@ def migrate(filepath, iso, countries_topojson):
         for code in iso:
             if code["alpha-3"] == row["Country Code"]:
                 current_code = code["country-code"]
+                if Country.query.filter_by(country_code=current_code).first():
+                    break
                 country = Country(
                     country_code=code["country-code"],
                     country_name=row["Country Name"],

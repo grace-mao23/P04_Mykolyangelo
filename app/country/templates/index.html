@@ -114,20 +114,8 @@
 <section id="countries">
   <div class="inner-section">
     <h1 class="heading">Search by Country</h1>
-    <br>
-    <label for="countryName">Country Name</label>
-    <input type="text" id="countryName" name="countryName">
-    <div id="country"
-      <div>
-      {% for country in data %}
-        {% if loop.index is divisibleby(10) %}
-          </div>
-          <div>
-        {% endif %}
-        <a href="/country/{{country['countryCode']}}">{{country['countryName']}}</a>
-      {% endfor %}
-      </div>
-    </div>
+    <input type="text" id="searchCountry" placeholder="Search for a country">
+    <ul id="searchResult"></ul>
   </div>
 </section>
 {% endblock %}
@@ -138,4 +126,5 @@
 <script src="{{ url_for('static', filename='assets/min/topojson.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/world.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/globe.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/search.js') }}"></script>
 {% endblock %}

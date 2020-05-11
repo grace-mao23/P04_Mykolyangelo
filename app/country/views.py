@@ -8,15 +8,6 @@ from app.graphql.schema import schema
 
 bp = Blueprint("country", __name__, url_prefix="", template_folder="templates")
 
-COUNTRY_QUERY = """
-{
-  allCountries {
-    countryName
-    countryCode
-  }
-}
-"""
-
 CO2_EMISSION_QUERY = """
 {
   allCo2Emissions {
@@ -62,10 +53,7 @@ def format_climate_change_query(country_code):
 
 @bp.route("/")
 def index():
-    result = schema.execute(COUNTRY_QUERY).data["allCountries"]
-    # countries_topojson = JSONCache.query.all()[0].data
-    print(result[:215])
-    return render_template("index.html", data=list(result)[:215])
+    return render_template("index.html")
 
 
 @bp.route("/country/<int:country_code>")
