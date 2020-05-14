@@ -2,6 +2,8 @@
 
 Grace Mao (PM), Tammy Chen, Jun Tao Lei, and Jackson Zou
 
+[Video Demo Here!](https://youtu.be/foaOfl5LUUc)
+
 ## Summary
 
 This project is a proper visualization of CO2, methane, and other
